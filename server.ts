@@ -131,7 +131,7 @@ function generateMockResponse(data: any, customScenario?: string) {
       {
         name: customScenario ? `Scenario: ${customScenario}` : "Smart Load Shifting & Behavior Optimization",
         description: "Shifting dishwasher/dryer cycles to early mornings (before 8 AM) or late evenings (after 8 PM), combined with LED lighting upgrades.",
-        estimatedCost: 45,
+        estimatedCost: 5850,
         estimatedMonthlySavings: Math.round(avgElectricityCost * 0.18),
         paybackPeriodMonths: 2,
         yearlyCarbonReductionKg: Math.round(avgElectricityKwh * 0.18 * 12 * 0.4)
@@ -139,7 +139,7 @@ function generateMockResponse(data: any, customScenario?: string) {
       {
         name: "Full Smart IoT Eco-System Upgrade",
         description: "Installing smart plugs with local power scheduling, smart radiator valves, and building Home Assistant automations for major appliances.",
-        estimatedCost: 190,
+        estimatedCost: 24700,
         estimatedMonthlySavings: Math.round(avgElectricityCost * 0.28),
         paybackPeriodMonths: 6,
         yearlyCarbonReductionKg: Math.round(avgElectricityKwh * 0.28 * 12 * 0.4)
@@ -272,7 +272,7 @@ Please respond strictly in JSON format matching the following structure:
   }
 }
 
-Do not include any extra text outside of the JSON response block. Make the recommendations, custom automations, and predictive calculations highly realistic and tailored directly to the specific appliances, watts, usage hours, and custom scenario inputs provided by the user. Use gemini-3.5-flash for the output.`;
+Do not include any extra text outside of the JSON response block. Make the recommendations, custom automations, and predictive calculations highly realistic and tailored directly to the specific appliances, watts, usage hours, and custom scenario inputs provided by the user. CRITICAL: All financial figures (such as annualSavings, estimatedCost, estimatedMonthlySavings) MUST be formatted as numbers and estimated in Kenyan Shillings (KES) rather than USD ($). Use gemini-3.5-flash for the output.`;
 
     const response = await ai.models.generateContent({
       model: "gemini-3.5-flash",

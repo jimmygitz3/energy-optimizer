@@ -50,10 +50,10 @@ export default function AnalyticDashboardStudio({
   const [activeTool, setActiveTool] = useState<"bi" | "excel" | "python">("bi");
 
   // 1. Manual Inputs state (simulated dashboard controller)
-  const [customBillInput, setCustomBillInput] = useState<number>(115);
+  const [customBillInput, setCustomBillInput] = useState<number>(15000);
   const [customApplianceCount, setCustomApplianceCount] = useState<number>(appliances.length || 6);
   const [customDailyHours, setCustomDailyHours] = useState<number>(5.5);
-  const [tariffRate, setTariffRate] = useState<number>(0.24); // $/kWh
+  const [tariffRate, setTariffRate] = useState<number>(30); // KES/kWh
   const [co2Coefficient, setCo2Coefficient] = useState<number>(0.42); // kg CO2e per kWh
 
   // 2. Simple Household Action Checklist state
@@ -107,10 +107,10 @@ export default function AnalyticDashboardStudio({
   );
 
   const potentialAnnualSavings = Math.round(
-    (ledUpgrade ? 140 : 0) +
-    (vampireKill ? 45 : 0) +
-    (offPeakShifting ? 90 : 0) +
-    (thermostatAdjust ? 60 : 0)
+    (ledUpgrade ? 18200 : 0) +
+    (vampireKill ? 5850 : 0) +
+    (offPeakShifting ? 11700 : 0) +
+    (thermostatAdjust ? 7800 : 0)
   );
 
   const calculatedEcoScore = Math.max(
@@ -134,7 +134,7 @@ export default function AnalyticDashboardStudio({
     setTimeout(() => {
       setPyConsoleLog(prev => [
         ...prev,
-        `>>> df = pd.DataFrame({ 'month_bill': [115, 120, 95, 140, 160], 'appliances': [${customApplianceCount}, ${customApplianceCount}, ${customApplianceCount}, ${customApplianceCount}, ${customApplianceCount}], 'daily_hours': [${customDailyHours}, ${customDailyHours}, ${customDailyHours}, ${customDailyHours}, ${customDailyHours}] })`,
+        `>>> df = pd.DataFrame({ 'month_bill': [15000, 16000, 12000, 18000, 21000], 'appliances': [${customApplianceCount}, ${customApplianceCount}, ${customApplianceCount}, ${customApplianceCount}, ${customApplianceCount}], 'daily_hours': [${customDailyHours}, ${customDailyHours}, ${customDailyHours}, ${customDailyHours}, ${customDailyHours}] })`,
         `>>> tariff_constant = ${actualEffectiveRate}`,
         `>>> co2_factor = ${co2Coefficient}`,
         `>>> # Applying Vectorized Energy Footprint formula: (Bill / tariff) * co2_factor`,
@@ -148,10 +148,10 @@ export default function AnalyticDashboardStudio({
         ...prev,
         `      month_bill  appliances  daily_hours  footprint_kg_co2`,
         `count       5.00        5.00         5.00              5.00`,
-        `mean      126.00        ${customApplianceCount}.00         ${customDailyHours}0            231.25`,
-        `std        25.10        0.00         0.00             45.20`,
-        `min        95.00        ${customApplianceCount}.00         ${customDailyHours}0            174.17`,
-        `max       160.00        ${customApplianceCount}.00         ${customDailyHours}0            293.33`,
+        `mean    16400.00        ${customApplianceCount}.00         ${customDailyHours}0            231.25`,
+        `std       251.00        0.00         0.00             45.20`,
+        `min     12000.00        ${customApplianceCount}.00         ${customDailyHours}0            174.17`,
+        `max     21000.00        ${customApplianceCount}.00         ${customDailyHours}0            293.33`,
         `>>> # Plotting Matplotlib regression visualizer...`,
         `>>> plt.plot(df['month_bill'], df['footprint_kg_co2'], marker='o', color='emerald')`,
         `>>> plt.title('Pre-built Analytics Formula - Energy footprint vs Expenditures')`,
@@ -166,14 +166,14 @@ export default function AnalyticDashboardStudio({
   const comparisonData = [
     {
       name: "Actual Baseline",
-      "Utility cost ($)": customBillInput,
+      "Utility Cost (KES)": customBillInput,
       "Carbon Footprint (Kg CO2)": Math.round((customBillInput / actualEffectiveRate) * co2Coefficient)
     },
     {
       name: "Optimized Model",
-      "Utility cost ($)": Math.round(customBillInput * (1 - (potentialAnnualSavings / 500))),
+      "Utility Cost (KES)": Math.round(customBillInput * (1 - (potentialAnnualSavings / 65000))),
       "Carbon Footprint (Kg CO2)": Math.round(
-        ((customBillInput * (1 - (potentialAnnualSavings / 500))) / actualEffectiveRate) * co2Coefficient
+        ((customBillInput * (1 - (potentialAnnualSavings / 65000))) / actualEffectiveRate) * co2Coefficient
       )
     }
   ];
@@ -254,13 +254,13 @@ export default function AnalyticDashboardStudio({
               <div>
                 <div className="flex justify-between text-xs font-bold text-slate-700 mb-1">
                   <span>Monthly Electricity Bill</span>
-                  <span className="font-mono text-emerald-600">${customBillInput}</span>
+                  <span className="font-mono text-emerald-600">KES {customBillInput}</span>
                 </div>
                 <input
                   type="range"
-                  min="30"
-                  max="300"
-                  step="5"
+                  min="3000"
+                  max="45000"
+                  step="500"
                   value={customBillInput}
                   onChange={(e) => setCustomBillInput(Number(e.target.value))}
                   className="w-full accent-slate-900 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer"
@@ -302,10 +302,10 @@ export default function AnalyticDashboardStudio({
             {/* Formula Constants Customizer */}
             <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase">Tariff Rate ($/kWh)</label>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase">Tariff Rate (KES/kWh)</label>
                 <input
                   type="number"
-                  step="0.01"
+                  step="0.5"
                   value={tariffRate}
                   onChange={(e) => setTariffRate(Number(e.target.value))}
                   className="w-full text-xs p-1.5 border border-slate-200 rounded mt-1 font-mono focus:ring-1 focus:ring-slate-900 bg-white"
@@ -423,8 +423,8 @@ export default function AnalyticDashboardStudio({
 
                 <div className="bg-slate-50 p-3 rounded-lg border border-slate-150">
                   <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">EST ANNUAL SAVINGS</span>
-                  <div className="text-lg font-black text-indigo-600 font-mono mt-0.5">${potentialAnnualSavings}</div>
-                  <span className="text-[9px] text-slate-400 font-medium">USD / year modeled</span>
+                  <div className="text-lg font-black text-indigo-600 font-mono mt-0.5">KES {potentialAnnualSavings}</div>
+                  <span className="text-[9px] text-slate-400 font-medium">KES / year modeled</span>
                 </div>
 
                 <div className="bg-slate-50 p-3 rounded-lg border border-slate-150">
@@ -438,7 +438,7 @@ export default function AnalyticDashboardStudio({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
                 {/* Scenario comparison chart */}
                 <div className="border border-slate-100 rounded-lg p-3">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Scenario Analysis ($ vs Kg CO₂e)</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Scenario Analysis (KES vs Kg CO₂e)</span>
                   <div className="h-[170px] w-full text-xs font-mono">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={comparisonData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
@@ -447,7 +447,7 @@ export default function AnalyticDashboardStudio({
                         <YAxis stroke="#94a3b8" fontSize={9} />
                         <Tooltip contentStyle={{ fontSize: '10px' }} />
                         <Legend iconSize={6} wrapperStyle={{ fontSize: '9px' }} />
-                        <Bar dataKey="Utility cost ($)" fill="#0ea5e9" radius={[3, 3, 0, 0]} />
+                        <Bar dataKey="Utility Cost (KES)" fill="#0ea5e9" radius={[3, 3, 0, 0]} />
                         <Bar dataKey="Carbon Footprint (Kg CO2)" fill="#10b981" radius={[3, 3, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
@@ -539,9 +539,9 @@ export default function AnalyticDashboardStudio({
                     <tr className="bg-slate-50 text-slate-600 border-b border-slate-200 text-[9px] font-bold text-center">
                       <td className="py-1.5 border-r border-slate-200 bg-slate-100 font-bold">Row</td>
                       <td className="py-1.5 border-r border-slate-200 text-left pl-2">Billing Month</td>
-                      <td className="py-1.5 border-r border-slate-200 text-right pr-2">Manual Bill ($)</td>
+                      <td className="py-1.5 border-r border-slate-200 text-right pr-2">Manual Bill (KES)</td>
                       <td className="py-1.5 border-r border-slate-200 text-right pr-2">Appliance (kWh/mo)</td>
-                      <td className="py-1.5 border-r border-slate-200 text-right pr-2">Effective Tariff ($)</td>
+                      <td className="py-1.5 border-r border-slate-200 text-right pr-2">Effective Tariff (KES)</td>
                       <td className="py-1.5 border-r border-slate-200 text-right pr-2">Calculated CO₂ (Kg)</td>
                       <td className="py-1.5 text-center">Eco Score</td>
                     </tr>
@@ -553,13 +553,13 @@ export default function AnalyticDashboardStudio({
                       <td className="py-2 border-r border-slate-200 bg-slate-100 text-slate-400 font-bold select-none text-[9px]">2</td>
                       <td className="py-2 border-r border-slate-200 text-left pl-2 font-semibold text-slate-900">Current Simulation</td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-indigo-600 group-hover:bg-indigo-50/50 transition-colors">
-                        ${customBillInput}
+                        KES {customBillInput}
                       </td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-600">
                         {calculatedMonthlyKwh} kWh
                       </td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-emerald-600 font-bold">
-                        ${actualEffectiveRate.toFixed(2)}
+                        KES {actualEffectiveRate.toFixed(2)}
                       </td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-amber-600 font-bold bg-amber-50/40">
                         {calculatedMonthlyFootprintKg} kg
@@ -573,9 +573,9 @@ export default function AnalyticDashboardStudio({
                     <tr className="hover:bg-slate-50 group">
                       <td className="py-2 border-r border-slate-200 bg-slate-100 text-slate-400 font-bold select-none text-[9px]">3</td>
                       <td className="py-2 border-r border-slate-200 text-left pl-2 font-semibold text-slate-400">Jan Log (Static)</td>
-                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">$85</td>
+                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">KES 11050</td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">108 kWh</td>
-                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">$0.25</td>
+                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">KES 30.00</td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">188.5 kg</td>
                       <td className="py-2 text-center text-slate-400">82</td>
                     </tr>
@@ -584,9 +584,9 @@ export default function AnalyticDashboardStudio({
                     <tr className="hover:bg-slate-50 group">
                       <td className="py-2 border-r border-slate-200 bg-slate-100 text-slate-400 font-bold select-none text-[9px]">4</td>
                       <td className="py-2 border-r border-slate-200 text-left pl-2 font-semibold text-slate-400">Feb Log (Static)</td>
-                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">$78</td>
+                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">KES 10140</td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">108 kWh</td>
-                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">$0.25</td>
+                      <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">KES 30.00</td>
                       <td className="py-2 border-r border-slate-200 text-right pr-2 text-slate-400">175.9 kg</td>
                       <td className="py-2 text-center text-slate-400">84</td>
                     </tr>
@@ -596,13 +596,13 @@ export default function AnalyticDashboardStudio({
                       <td className="py-1.5 border-r border-slate-200 bg-slate-100 text-[9px]">5</td>
                       <td className="py-1.5 border-r border-slate-200 text-left pl-2">AVERAGE (fx)</td>
                       <td className="py-1.5 border-r border-slate-200 text-right pr-2">
-                        ${Math.round((customBillInput + 85 + 78) / 3)}
+                        KES {Math.round((customBillInput + 11050 + 10140) / 3)}
                       </td>
                       <td className="py-1.5 border-r border-slate-200 text-right pr-2">
                         {Math.round((calculatedMonthlyKwh + 108 + 108) / 3)} kWh
                       </td>
                       <td className="py-1.5 border-r border-slate-200 text-right pr-2">
-                        ${actualEffectiveRate.toFixed(2)}
+                        KES {actualEffectiveRate.toFixed(2)}
                       </td>
                       <td className="py-1.5 border-r border-slate-200 text-right pr-2 bg-slate-100/50">
                         {Math.round((calculatedMonthlyFootprintKg + 188.5 + 175.9) / 3)} kg

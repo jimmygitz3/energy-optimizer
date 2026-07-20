@@ -1,13 +1,13 @@
 import { UtilityBill, Appliance } from "./types";
 
 export const DEFAULT_BILL_DATA: UtilityBill[] = [
-  { id: "bill_1", month: "Jan", electricityKwh: 340, electricityCost: 85, gasTherm: 42, gasCost: 55 },
-  { id: "bill_2", month: "Feb", electricityKwh: 310, electricityCost: 78, gasTherm: 38, gasCost: 50 },
-  { id: "bill_3", month: "Mar", electricityKwh: 290, electricityCost: 72, gasTherm: 25, gasCost: 35 },
-  { id: "bill_4", month: "Apr", electricityKwh: 320, electricityCost: 80, gasTherm: 15, gasCost: 20 },
-  { id: "bill_5", month: "May", electricityKwh: 450, electricityCost: 112, gasTherm: 8, gasCost: 12 },
-  { id: "bill_6", month: "Jun", electricityKwh: 590, electricityCost: 148, gasTherm: 5, gasCost: 8 },
-  { id: "bill_7", month: "Jul", electricityKwh: 680, electricityCost: 170, gasTherm: 4, gasCost: 6 }
+  { id: "bill_1", month: "Jan", electricityKwh: 340, electricityCost: 11050, gasTherm: 42, gasCost: 7150 },
+  { id: "bill_2", month: "Feb", electricityKwh: 310, electricityCost: 10140, gasTherm: 38, gasCost: 6500 },
+  { id: "bill_3", month: "Mar", electricityKwh: 290, electricityCost: 9360, gasTherm: 25, gasCost: 4550 },
+  { id: "bill_4", month: "Apr", electricityKwh: 320, electricityCost: 10400, gasTherm: 15, gasCost: 2600 },
+  { id: "bill_5", month: "May", electricityKwh: 450, electricityCost: 14560, gasTherm: 8, gasCost: 1560 },
+  { id: "bill_6", month: "Jun", electricityKwh: 590, electricityCost: 19240, gasTherm: 5, gasCost: 1040 },
+  { id: "bill_7", month: "Jul", electricityKwh: 680, electricityCost: 22100, gasTherm: 4, gasCost: 780 }
 ];
 
 export const DEFAULT_APPLIANCES: Appliance[] = [

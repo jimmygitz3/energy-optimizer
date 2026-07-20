@@ -174,7 +174,7 @@ export default function AutomationGenerator({
                               </span>
                             </div>
                             <div className="text-[11px] text-gray-500 font-mono flex items-center gap-3">
-                              <span className="text-emerald-700 font-bold">Est Savings: ${rec.annualSavings}/year</span>
+                              <span className="text-emerald-700 font-bold">Est Savings: KES {rec.annualSavings}/year</span>
                               <span className="text-indigo-600 font-bold">Offset: {rec.carbonSavingsKg} kg CO2e</span>
                             </div>
                           </div>
@@ -216,11 +216,11 @@ export default function AutomationGenerator({
                       <div className="border-t border-gray-200/60 pt-3 mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono">
                         <div>
                           <span className="text-gray-400 block text-[9px] uppercase tracking-wide font-black">Monthly Save</span>
-                          <strong className="text-emerald-700 font-bold text-xs">${sc.estimatedMonthlySavings}/mo</strong>
+                          <strong className="text-emerald-700 font-bold text-xs">KES {sc.estimatedMonthlySavings}/mo</strong>
                         </div>
                         <div>
                           <span className="text-gray-400 block text-[9px] uppercase tracking-wide font-black">Capital Investment</span>
-                          <strong className="text-slate-800 font-bold text-xs">${sc.estimatedCost}</strong>
+                          <strong className="text-slate-800 font-bold text-xs">KES {sc.estimatedCost}</strong>
                         </div>
                         <div>
                           <span className="text-gray-400 block text-[9px] uppercase tracking-wide font-black">ROI Payback</span>

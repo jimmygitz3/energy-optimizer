@@ -20,9 +20,9 @@ export default function UtilityBillsForm({
 }: UtilityBillsFormProps) {
   const [month, setMonth] = useState("Aug");
   const [electricityKwh, setElectricityKwh] = useState(380);
-  const [electricityCost, setElectricityCost] = useState(95);
+  const [electricityCost, setElectricityCost] = useState(12350);
   const [gasTherm, setGasTherm] = useState(6);
-  const [gasCost, setGasCost] = useState(10);
+  const [gasCost, setGasCost] = useState(1300);
 
   // File parsing simulator state
   const [isScanning, setIsScanning] = useState(false);
@@ -65,11 +65,11 @@ export default function UtilityBillsForm({
       const randomMonth = ["Aug", "Sep", "Oct", "Nov", "Dec"][Math.floor(Math.random() * 5)];
       
       const kwh = Math.floor(Math.random() * 250) + 300;
-      const cost = Math.round(kwh * 0.25);
+      const cost = Math.round(kwh * 30);
       const therms = Math.floor(Math.random() * 12) + 5;
-      const gasC = Math.round(therms * 1.3);
+      const gasC = Math.round(therms * 150);
 
-      const raw = `MID-CITY ENERGY CORP\nStatement Date: 2026-07-15\nAccount: ${randomAccount}\nCustomer: ${randomName}\nService Address: ${randomAddress}\nService Month: ${randomMonth}\n-----------------------------------\nCURRENT CHARGES:\nElectricity usage: ${kwh} kWh @ $0.25 = $${cost}.00\nGas service: ${therms} Therms @ $1.30 = $${gasC}.00\nTotal Bill Due: $${cost + gasC}.00\nThank you for choosing Mid-City!`;
+      const raw = `MID-CITY ENERGY CORP\nStatement Date: 2026-07-15\nAccount: ${randomAccount}\nCustomer: ${randomName}\nService Address: ${randomAddress}\nService Month: ${randomMonth}\n-----------------------------------\nCURRENT CHARGES:\nElectricity usage: ${kwh} kWh @ KES 30.00 = KES ${cost}.00\nGas service: ${therms} Therms @ KES 150.00 = KES ${gasC}.00\nTotal Bill Due: KES ${cost + gasC}.00\nThank you for choosing Mid-City!`;
 
       // Scrub utility personal data
       let scrubbed = raw;
@@ -294,7 +294,7 @@ export default function UtilityBillsForm({
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-600 mb-1">Electricity Cost ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-600 mb-1">Electricity Cost (KES)</label>
                   <input
                     type="number"
                     value={electricityCost}
@@ -322,7 +322,7 @@ export default function UtilityBillsForm({
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-600 mb-1">Gas Cost ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-600 mb-1">Gas Cost (KES)</label>
                   <input
                     type="number"
                     value={gasCost}
@@ -367,10 +367,10 @@ export default function UtilityBillsForm({
                     <tr className="border-b border-slate-100 text-slate-500 uppercase text-[10px] tracking-wider font-semibold">
                       <th className="py-2.5 font-bold">Billing Period</th>
                       <th className="py-2.5 font-bold text-right">Power Draw (kWh)</th>
-                      <th className="py-2.5 font-bold text-right">Power cost</th>
+                      <th className="py-2.5 font-bold text-right">Power Cost (KES)</th>
                       <th className="py-2.5 font-bold text-right">Gas Draw (Th)</th>
-                      <th className="py-2.5 font-bold text-right">Gas cost</th>
-                      <th className="py-2.5 font-bold text-right">Total Cost</th>
+                      <th className="py-2.5 font-bold text-right">Gas Cost (KES)</th>
+                      <th className="py-2.5 font-bold text-right">Total Cost (KES)</th>
                       <th className="py-2.5 font-bold text-center">Action</th>
                     </tr>
                   </thead>
@@ -379,13 +379,13 @@ export default function UtilityBillsForm({
                       <tr key={b.id} className="hover:bg-slate-50/50 transition-colors">
                         <td className="py-3 font-semibold text-slate-900">{b.month} 2026</td>
                         <td className="py-3 text-right font-mono">{b.electricityKwh}</td>
-                        <td className="py-3 text-right text-blue-600 font-semibold font-mono">${b.electricityCost}</td>
+                        <td className="py-3 text-right text-blue-600 font-semibold font-mono">KES {b.electricityCost}</td>
                         <td className="py-3 text-right font-mono">{b.gasTherm ?? "-"}</td>
                         <td className="py-3 text-right text-amber-600 font-semibold font-mono">
-                          {b.gasCost ? `$${b.gasCost}` : "-"}
+                          {b.gasCost ? `KES ${b.gasCost}` : "-"}
                         </td>
                         <td className="py-3 text-right text-slate-900 font-bold font-mono">
-                          ${b.electricityCost + (b.gasCost || 0)}
+                          KES {b.electricityCost + (b.gasCost || 0)}
                         </td>
                         <td className="py-3 text-center">
                           <button

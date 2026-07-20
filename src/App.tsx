@@ -287,12 +287,6 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
-            {/* Secure Vault Active Badge */}
-            <div className="flex items-center gap-2 px-3 py-1 bg-emerald-950/50 rounded-full border border-emerald-500/30">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-              <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest">Secure Vault Active</span>
-            </div>
-
             {/* Profile sync identifier */}
             {currentUser && (
               <div className="flex items-center gap-3 border-l border-slate-850 pl-4 sm:pl-6">
@@ -516,8 +510,8 @@ export default function App() {
                 <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Average Monthly Bill</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-light text-slate-900 font-mono">${avgMonthlyUtilityCost}</span>
-                    <span className="text-sm text-slate-500 font-medium">USD</span>
+                    <span className="text-3xl font-light text-slate-900 font-mono">KES {avgMonthlyUtilityCost.toLocaleString()}</span>
+                    <span className="text-sm text-slate-500 font-medium">KES</span>
                   </div>
                   <p className="text-xs text-emerald-600 font-medium mt-2">↓ 8.2% vs last month</p>
                 </div>

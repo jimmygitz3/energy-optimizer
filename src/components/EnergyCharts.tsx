@@ -38,7 +38,7 @@ export default function EnergyCharts({ bills, appliances }: EnergyChartsProps) {
     return {
       name: app.name,
       value: Math.round(monthlyKwh),
-      cost: Math.round(monthlyKwh * 0.25) // Est $0.25 per kWh
+      cost: Math.round(monthlyKwh * 30) // Est 30 KES per kWh
     };
   }).filter(item => item.value > 0);
 
@@ -47,22 +47,22 @@ export default function EnergyCharts({ bills, appliances }: EnergyChartsProps) {
   // 3. Prepare predictive scenario comparison
   const totalBillsElectricityCost = bills.reduce((sum, b) => sum + b.electricityCost, 0);
   const totalBillsGasCost = bills.reduce((sum, b) => sum + (b.gasCost || 0), 0);
-  const avgMonthlyUtilityCost = bills.length > 0 ? (totalBillsElectricityCost + totalBillsGasCost) / bills.length : 140;
+  const avgMonthlyUtilityCost = bills.length > 0 ? (totalBillsElectricityCost + totalBillsGasCost) / bills.length : 18200;
 
   const comparativeScenarios = [
     {
       name: "Current Baseline",
-      "Utility Bill ($)": Math.round(avgMonthlyUtilityCost),
+      "Utility Bill (KES)": Math.round(avgMonthlyUtilityCost),
       "Carbon Footprint (Kg CO2e)": Math.round((bills.reduce((sum, b) => sum + b.electricityKwh, 0) / (bills.length || 1)) * 0.45)
     },
     {
       name: "Smart Load-Shift",
-      "Utility Bill ($)": Math.round(avgMonthlyUtilityCost * 0.82), // 18% savings
+      "Utility Bill (KES)": Math.round(avgMonthlyUtilityCost * 0.82), // 18% savings
       "Carbon Footprint (Kg CO2e)": Math.round((bills.reduce((sum, b) => sum + b.electricityKwh, 0) / (bills.length || 1)) * 0.82 * 0.45)
     },
     {
       name: "Full Smart IoT Eco",
-      "Utility Bill ($)": Math.round(avgMonthlyUtilityCost * 0.72), // 28% savings
+      "Utility Bill (KES)": Math.round(avgMonthlyUtilityCost * 0.72), // 28% savings
       "Carbon Footprint (Kg CO2e)": Math.round((bills.reduce((sum, b) => sum + b.electricityKwh, 0) / (bills.length || 1)) * 0.72 * 0.45)
     }
   ];
@@ -85,7 +85,7 @@ export default function EnergyCharts({ bills, appliances }: EnergyChartsProps) {
           <div className="mb-4">
             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1">
               <TrendingUp className="w-4 h-4 text-emerald-500" />
-              Monthly Utility Billing Log History ($)
+              Monthly Utility Billing Log History (KES)
             </h3>
             <p className="text-[11px] text-gray-500">Electricity cost stacked alongside gas over registered periods</p>
           </div>
@@ -195,7 +195,7 @@ export default function EnergyCharts({ bills, appliances }: EnergyChartsProps) {
                 <Leaf className="w-4 h-4 text-emerald-500" />
                 UN SDG 7 Scenario Optimization Targets
               </h3>
-              <p className="text-[11px] text-gray-500">Predictive monthly dollar costs vs estimated carbon output (Kg CO2e) per scenario</p>
+              <p className="text-[11px] text-gray-500">Predictive monthly KES costs vs estimated carbon output (Kg CO2e) per scenario</p>
             </div>
             <div className="bg-emerald-50 text-emerald-800 text-[10px] px-2.5 py-1 rounded border border-emerald-200 font-bold self-start sm:self-auto">
               🎯 Target SDG 7.3: +100% Efficiency Acceleration
@@ -210,7 +210,7 @@ export default function EnergyCharts({ bills, appliances }: EnergyChartsProps) {
                 <YAxis stroke="#9ca3af" fontSize={10} />
                 <Tooltip contentStyle={{ fontSize: '11px', fontFamily: 'monospace' }} />
                 <Legend iconSize={8} wrapperStyle={{ fontSize: '11px' }} />
-                <Bar dataKey="Utility Bill ($)" fill="#4f46e5" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Utility Bill (KES)" fill="#4f46e5" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="Carbon Footprint (Kg CO2e)" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
