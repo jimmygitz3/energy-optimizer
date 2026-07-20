@@ -1,0 +1,6 @@
+{
+  "name": "Household Energy Efficiency Optimizer",
+  "description": "An interactive dashboard for apartment tenants to track utility bills, appliance footprints, perform predictive savings modeling, export secure encrypted data, and generate smart-home energy automation scripts aligned with UN SDG Goal 7.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
